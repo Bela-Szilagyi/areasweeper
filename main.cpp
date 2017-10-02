@@ -30,10 +30,14 @@ public:
         std::cin >> option;
         Area* place = area + y*width + x;
         if (option == 'r') {
+            if ( (place->isMined()) ) {
+                std::cout<<":-("<<std::endl;
+                printEnd();
+                return;
+            }
             reveal(x, y);
             printReveal();
         }
-
     }
 
 private:
@@ -168,6 +172,17 @@ private:
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 if ( (area+h*width+w)->isRevealed() ) std::cout<<(area+h*width+w)->getNeighbours();
+                else std::cout<<'u';
+            }
+            std::cout<<std::endl;
+        }
+    }
+
+    void printEnd() {
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                if ( (area+h*width+w)->isRevealed() ) std::cout<<(area+h*width+w)->getNeighbours();
+                else if ( (area+h*width+w)->isMined() ) std::cout<<'@';
                 else std::cout<<'u';
             }
             std::cout<<std::endl;
