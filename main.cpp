@@ -17,6 +17,7 @@ public:
         printNeighbours();
         int x, y;
         char option;
+        //TODO check if not x,y not digit
         do {
             do {
                 std::cout << "Enter x ";
@@ -56,13 +57,31 @@ public:
                     continue;
                 } else {
                     place->setFlag();
+                    ++nrOfFlags;
                     if (place->isMined()) {
                         ++foundMines;
-                        if (foundMines == nrOfMines) {
+                        if (foundMines == nrOfMines && isAllRevealed()) {
                             std::cout<<":-)"<<std::endl;
                             printEnd();
                             return;
                         }
+                    }
+                    printReveal();
+                    continue;
+                }
+            }
+            if (option=='u') {
+                if (place->isRevealed()) {
+                    std::cout << "Already revealed'" << std::endl;
+                    continue;
+                } else if (!place->isFlagged()) {
+                    std::cout << "Not flagged'" << std::endl;
+                    continue;
+                } else {
+                    place->removeFlag();
+                    --nrOfFlags;
+                    if (place->isMined()) {
+                        --foundMines;
                     }
                     printReveal();
                     continue;
@@ -76,6 +95,7 @@ private:
     Area* area;
     int nrOfMines = 0;
     int foundMines = 0;
+    int nrOfFlags = 0;
 
     void initArea() {
         //TODO make sure taht at least one mine is set
@@ -204,9 +224,11 @@ private:
     }
 
     void printReveal() {
+        std::cout<<"Number of mines: "<<nrOfMines<<", number of flags: "<<nrOfFlags<<std::endl;
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
-                if ( (area+h*width+w)->isRevealed() ) std::cout<<(area+h*width+w)->getNeighbours();
+                if ( (area+h*width+w)->isFlagged() ) std::cout<<'f';
+                else if ( (area+h*width+w)->isRevealed() ) std::cout<<(area+h*width+w)->getNeighbours();
                 else std::cout<<'u';
             }
             std::cout<<std::endl;
@@ -222,6 +244,13 @@ private:
             }
             std::cout<<std::endl;
         }
+    }
+
+    bool isAllRevealed() {
+        for (int i = 0; i < width*height; i++) {
+            if ( !(area+i)->isRevealed() && !(area+i)->isFlagged() ) return false;
+        }
+        return true;
     }
 
 };
