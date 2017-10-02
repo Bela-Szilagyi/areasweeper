@@ -1,0 +1,3 @@
+/home/en/CLionProjects/areaSweeper/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/en/CLionProjects/areaSweeper/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/en/CLionProjects/areaSweeper/cmake-build-debug/CMakeFiles/areaSweeper.dir

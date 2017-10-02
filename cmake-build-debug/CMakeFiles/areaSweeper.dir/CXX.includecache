@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/en/CLionProjects/areaSweeper/main.cpp
+iostream
+-
+ctime
+-
+src/Area.h
+/home/en/CLionProjects/areaSweeper/src/Area.h
+
+/home/en/CLionProjects/areaSweeper/src/Area.cpp
+regex.h
+-
+Area.h
+/home/en/CLionProjects/areaSweeper/src/Area.h
+
+/home/en/CLionProjects/areaSweeper/src/Area.h
+

@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/areaSweeper.dir/main.cpp.o CMakeFiles/areaSweeper.dir/src/Area.cpp.o  -o areaSweeper 
