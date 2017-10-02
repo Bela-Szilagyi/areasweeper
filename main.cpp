@@ -15,41 +15,76 @@ public:
         printArea();
         countNeighbours();
         printNeighbours();
-        /*
-        reveal(0, 0);
-        printReveal();
-        */
-
         int x, y;
         char option;
-        std::cout<<"Enter x ";
-        std::cin >> x;
-        std::cout<<"Enter y ";
-        std::cin >> y;
-        std::cout<<"Enter option: reveal/flag/unfalg (r/f/u) ";
-        std::cin >> option;
-        Area* place = area + y*width + x;
-        if (option == 'r') {
-            if ( (place->isMined()) ) {
-                std::cout<<":-("<<std::endl;
-                printEnd();
-                return;
+        do {
+            do {
+                std::cout << "Enter x ";
+                std::cin >> x;
+            } while (x < 0 || x >= width);
+            do {
+                std::cout << "Enter y ";
+                std::cin >> y;
+            } while (y < 0 || y >= height);
+
+            do {
+                std::cout << "Enter option: reveal/flag/unfalg (r/f/u) ";
+                std::cin >> option;
+            } while (option != 'r' && option != 'f' && option != 'u');
+
+            Area *place = area + y * width + x;
+            if (option == 'r') {
+                if ((place->isRevealed())) {
+                    std::cout << "Already revealed'" << std::endl;
+                    continue;
+                } else if ((place->isMined())) {
+                    std::cout << ":-(" << std::endl;
+                    printEnd();
+                    return;
+                } else {
+                    reveal(x, y);
+                    printReveal();
+                    continue;
+                }
             }
-            reveal(x, y);
-            printReveal();
-        }
+            if (option == 'f') {
+                if (place->isRevealed()) {
+                    std::cout << "Already revealed'" << std::endl;
+                    continue;
+                } else if (place->isFlagged()) {
+                    std::cout << "Already flagged'" << std::endl;
+                    continue;
+                } else {
+                    place->setFlag();
+                    if (place->isMined()) {
+                        ++foundMines;
+                        if (foundMines == nrOfMines) {
+                            std::cout<<":-)"<<std::endl;
+                            printEnd();
+                            return;
+                        }
+                    }
+                    printReveal();
+                    continue;
+                }
+            }
+        } while (true);
     }
 
 private:
     int width, height;
     Area* area;
+    int nrOfMines = 0;
+    int foundMines = 0;
 
     void initArea() {
+        //TODO make sure taht at least one mine is set
         int random;
         std::srand(std::time(NULL));
         for(int i = 0; i < width*height; i++) {
             random = std::rand()%5+1;
             if (random > 4) {
+                ++nrOfMines;
                 (area+i)->setMine();
             }
         }

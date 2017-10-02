@@ -16,11 +16,15 @@ public:
     int getNeighbours();
     void setRevealed();
     bool isRevealed();
+    void setFlag();
+    void removeFlag();
+    bool isFlagged();
 
 private:
     bool mined = false;
     bool revealed = false;
     int nrOfNeighbours;
+    bool flagged = false;
 };
 
 
