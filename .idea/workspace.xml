@@ -33,6 +33,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a349c38-79d3-45ac-8702-c2808a097716" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/areaSweeper.dir/main.cpp.o" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/areaSweeper.dir/main.cpp.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/areaSweeper" afterPath="$PROJECT_DIR$/cmake-build-debug/areaSweeper" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -58,8 +61,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="153" column="21" lean-forward="false" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="21" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -94,7 +97,6 @@
       <find>@</find>
       <find>:-(</find>
       <find>checkNumericInput</find>
-      <find>isn</find>
       <find>print</find>
       <find>'</find>
       <find>reveal</find>
@@ -105,6 +107,10 @@
       <find>dr</find>
       <find>beig</find>
       <find>todo</find>
+      <find>inita</find>
+      <find>countn</find>
+      <find>isn</find>
+      <find>//</find>
     </findStrings>
     <replaceStrings>
       <replace>isNumericInput</replace>
@@ -194,12 +200,12 @@
       <workItem from="1506894410478" duration="7082000" />
       <workItem from="1506927341702" duration="17573000" />
       <workItem from="1507016080231" duration="7569000" />
-      <workItem from="1507027920275" duration="13383000" />
+      <workItem from="1507027920275" duration="14257000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45607000" />
+    <option name="totallyTimeSpent" value="46481000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -245,18 +251,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>65</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>153</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager>
@@ -394,8 +388,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="153" column="21" lean-forward="false" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="21" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

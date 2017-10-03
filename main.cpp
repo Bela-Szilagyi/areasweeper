@@ -18,51 +18,6 @@ public:
         }
     }
 
-    char getLevel() {
-        std::string level;
-        do {
-            std::cout << "Enter difficulty level beginner/intermediate/expert (b/i/e) ";
-            std::cin >> level;
-        } while (level[0] != 'b' && level[0] != 'i' && level[0] != 'e');
-        return level[0];
-    }
-
-    void setLevel(char l) {
-        switch (l) {
-            case 'b' : {
-                this->width=9;
-                this->height=9;
-                this->nrOfMines = 10;
-                area = new Area[width*height];
-                break;
-            };
-            case 'i' : {
-                this->width=16;
-                this->height=16;
-                this->nrOfMines = 40;
-                area = new Area[width*height];
-                break;
-            };
-            case 'e' : {
-                this->width=30;
-                this->height=16;
-                this->nrOfMines = 99;
-                area = new Area[width*height];
-                break;
-            };
-        }
-    }
-
-    bool getDebugMode() {
-        char answer;
-        do {
-            std::cout << "Do you want to see the table and the number of neighbours (debug mode) y/n ";
-            std::cin >> answer;
-        } while (answer != 'y' && answer != 'n');
-        if (answer == 'n') return false;
-        return true;
-    }
-
     void run() {
         int x, y;
         std::string option;
@@ -151,6 +106,41 @@ private:
     int foundMines = 0;
     int nrOfFlags = 0;
 
+    char getLevel() {
+        std::string level;
+        do {
+            std::cout << "Enter difficulty level beginner/intermediate/expert (b/i/e) ";
+            std::cin >> level;
+        } while (level[0] != 'b' && level[0] != 'i' && level[0] != 'e');
+        return level[0];
+    }
+
+    void setLevel(char l) {
+        switch (l) {
+            case 'b' : {
+                this->width=9;
+                this->height=9;
+                this->nrOfMines = 10;
+                area = new Area[width*height];
+                break;
+            };
+            case 'i' : {
+                this->width=16;
+                this->height=16;
+                this->nrOfMines = 40;
+                area = new Area[width*height];
+                break;
+            };
+            case 'e' : {
+                this->width=30;
+                this->height=16;
+                this->nrOfMines = 99;
+                area = new Area[width*height];
+                break;
+            };
+        }
+    }
+
     void initArea() {
         int random;
         std::srand(std::time(NULL));
@@ -159,19 +149,6 @@ private:
                 random = std::rand()%(width*height);
             } while ((area+random)->isMined());
             (area+random)->setMine();
-        }
-    }
-
-    void printArea() {
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
-                if ((area+h*width+w)->isMined()) {
-                    std::cout << charRepresentations::mined;
-                } else {
-                    std::cout << charRepresentations::free;
-                }
-            }
-            std::cout<<std::endl;
         }
     }
 
@@ -194,24 +171,39 @@ private:
         if (x % width == 0) w = false;
         else if ( (x+1) % width == 0) e = false;
 
-        //n
         if (n) result += (area+place-width)->isMined();
-        //ne
         if (n && e) result += (area+place-width+1)->isMined();
-        //e
         if (e) result += (area+place+1)->isMined();
-        //se
         if (s && e) result += (area+place+width+1)->isMined();
-        //s
         if (s) result += (area+place+width)->isMined();
-        //sw
         if (s && w) result += (area+place+width-1)->isMined();
-        //w
         if (w) result += (area+place-1)->isMined();
-        //nw
         if (n && w) result += (area+place-width-1)->isMined();
 
         return result;
+    }
+
+    bool getDebugMode() {
+        char answer;
+        do {
+            std::cout << "Do you want to see the table and the number of neighbours (debug mode) y/n ";
+            std::cin >> answer;
+        } while (answer != 'y' && answer != 'n');
+        if (answer == 'n') return false;
+        return true;
+    }
+
+    void printArea() {
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                if ((area+h*width+w)->isMined()) {
+                    std::cout << charRepresentations::mined;
+                } else {
+                    std::cout << charRepresentations::free;
+                }
+            }
+            std::cout<<std::endl;
+        }
     }
 
     void printNeighbours() {
@@ -221,6 +213,15 @@ private:
             }
             std::cout<<std::endl;
         }
+    }
+
+    bool isNumericInput() {
+        if(!std::cin) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return false;
+        }
+        return true;
     }
 
     void reveal(int x, int y) {
@@ -249,6 +250,13 @@ private:
         if ( s && w ) reveal(x-1, y+1);
         if ( w ) reveal(x-1, y);
         if ( n && w ) reveal(x-1, y-1);
+    }
+
+    bool isAllRevealed() {
+        for (int i = 0; i < width*height; i++) {
+            if ( !(area+i)->isRevealed() && !(area+i)->isFlagged() ) return false;
+        }
+        return true;
     }
 
     void printReveal() {
@@ -282,22 +290,6 @@ private:
             std::cout<<std::endl;
         }
         drawBlueLine();
-    }
-
-    bool isAllRevealed() {
-        for (int i = 0; i < width*height; i++) {
-            if ( !(area+i)->isRevealed() && !(area+i)->isFlagged() ) return false;
-        }
-        return true;
-    }
-
-    bool isNumericInput() {
-        if(!std::cin) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            return false;
-        }
-        return true;
     }
 
     void drawBlueLine() {
