@@ -3,6 +3,8 @@
 #include <limits>
 #include "src/Area.h"
 
+//TODO no reveal if flagged
+
 class AreaSweeper {
 public:
     AreaSweeper() {};
@@ -32,14 +34,17 @@ public:
             } while (!isNumericInput() || y < 0 || y >= height);
 
             do {
-                std::cout << "Enter option: reveal/flag/unfalg (r/f/u) ";
+                std::cout << "Enter option: reveal/flag/unflag (r/f/u) ";
                 std::cin >> option;
             } while (option[0] != 'r' && option[0] != 'f' && option[0] != 'u');
 
             Area *place = area + y * width + x;
             if (option[0] == 'r') {
-                if ((place->isRevealed())) {
-                    std::cout << "Already revealed'" << std::endl;
+                if ((place->isFlagged())) {
+                    std::cout << "Already flagged!" << std::endl;
+                    continue;
+                } else if ((place->isRevealed())) {
+                    std::cout << "Already revealed!" << std::endl;
                     continue;
                 } else if ((place->isMined())) {
                     std::cout << ":-(" << std::endl;

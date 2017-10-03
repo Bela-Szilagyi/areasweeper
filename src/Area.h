@@ -16,7 +16,6 @@ namespace charRepresentations {
 }
 
 
-
 class Area {
 public:
     Area();
