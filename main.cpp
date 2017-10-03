@@ -3,7 +3,6 @@
 #include <limits>
 #include "src/Area.h"
 
-//TODO no reveal if flagged
 
 class AreaSweeper {
 public:
