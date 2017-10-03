@@ -5,17 +5,65 @@
 
 class AreaSweeper {
 public:
-    AreaSweeper(int w, int h) {
-        this->width=w;
-        this->height=h;
-        area = new Area[width*height];
-    };
+    AreaSweeper() {};
 
-    void game() {
+    void initGame() {
+        char level = getLevel();
+        setLevel(level);
         initArea();
-        printArea();
         countNeighbours();
-        printNeighbours();
+        if (getDebugMode()) {
+            printArea();
+            printNeighbours();
+        }
+    }
+
+    char getLevel() {
+        char level;
+        do {
+            std::cout << "Enter difficulty level beginner/intermediate/expert (b/i/e) ";
+            std::cin >> level;
+        } while (level != 'b' && level != 'i' && level != 'e');
+        return level;
+    }
+
+    void setLevel(char l) {
+        switch (l) {
+            case 'b' : {
+                this->width=9;
+                this->height=9;
+                this->nrOfMines = 10;
+                area = new Area[width*height];
+                break;
+            };
+            case 'i' : {
+                this->width=16;
+                this->height=16;
+                this->nrOfMines = 40;
+                area = new Area[width*height];
+                break;
+            };
+            case 'e' : {
+                this->width=30;
+                this->height=16;
+                this->nrOfMines = 99;
+                area = new Area[width*height];
+                break;
+            };
+        }
+    }
+
+    bool getDebugMode() {
+        char answer;
+        do {
+            std::cout << "Do you want to see the table and the number of beighbours (debug mode) y/n ";
+            std::cin >> answer;
+        } while (answer != 'y' && answer != 'n');
+        if (answer == 'n') return false;
+        return true;
+    }
+
+    void run() {
         int x, y;
         char option;
         do {
@@ -274,7 +322,8 @@ private:
 
 
 int main() {
-    AreaSweeper as(4, 3);
-    as.game();
+    AreaSweeper as;
+    as.initGame();
+    as.run();
     return 0;
 }
