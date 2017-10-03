@@ -17,10 +17,10 @@ src/Area.h
 /home/en/CLionProjects/areaSweeper/src/Area.h
 
 /home/en/CLionProjects/areaSweeper/src/Area.cpp
-regex.h
--
 Area.h
 /home/en/CLionProjects/areaSweeper/src/Area.h
 
 /home/en/CLionProjects/areaSweeper/src/Area.h
+iostream
+-
 

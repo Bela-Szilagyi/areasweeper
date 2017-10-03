@@ -195,50 +195,31 @@ private:
         if (x % width == 0) w = false;
         else if ( (x+1) % width == 0) e = false;
 
-        //n
-        if ( n && !(place-width)->isRevealed() ) {
-            reveal(x, y-1);
-        }
-        //ne
-        if ( n && e  && !(place-width+1)->isRevealed() ) {
-            reveal(x+1, y-1);
-        }
-        //e
-        if ( e  && !(place+1)->isRevealed() ) {
-            reveal(x+1, y);
-        }
-        //se
-        if ( s && e  && !(place+width+1)->isRevealed() ) {
-            reveal(x+1, y+1);
-        }
-        //s
-        if ( s  && !(place+width)->isRevealed() ) {
-            reveal(x, y+1);
-        }
-        //sw
-        if ( s && w  && !(place+width-1)->isRevealed() ) {
-            reveal(x-1, y+1);
-        }
-        //w
-        if ( w  && !(place-1)->isRevealed() ) {
-            reveal(x-1, y);
-        }
-        //nw
-        if ( n && w  && !(place-width-1)->isRevealed() ) {
-            reveal(x-1, y-1);
-        }
+        if ( n ) reveal(x, y-1);
+        if ( n && e ) reveal(x+1, y-1);
+        if ( e ) reveal(x+1, y);
+        if ( s && e ) reveal(x+1, y+1);
+        if ( s ) reveal(x, y+1);
+        if ( s && w ) reveal(x-1, y+1);
+        if ( w ) reveal(x-1, y);
+        if ( n && w ) reveal(x-1, y-1);
     }
 
     void printReveal() {
         std::cout<<"Number of mines: "<<nrOfMines<<", number of flags: "<<nrOfFlags<<std::endl;
+        std::cout<<"   "; for (int i = 0; i < width; i++) { std::cout<<i%10;std::cout<<" "; } std::cout<<std::endl;
+        drawBlueLine();
         for (int h = 0; h < height; h++) {
+            std::cout<<h%10<<" \033[1;34m|\033[0m";
             for (int w = 0; w < width; w++) {
                 if ( (area+h*width+w)->isFlagged() ) std::cout<<charRepresentations::flagged;
-                else if ( (area+h*width+w)->isRevealed() ) std::cout<<(area+h*width+w)->getNeighbours();
+                else if ( (area+h*width+w)->isRevealed() ) std::cout<<charRepresentationOf((area+h*width+w)->getNeighbours());
                 else std::cout<<charRepresentations::unrevealed;
+                std::cout<<"\033[1;34m|\033[0m";
             }
             std::cout<<std::endl;
         }
+        drawBlueLine();
     }
 
     void printEnd() {
@@ -261,13 +242,34 @@ private:
 
     bool isNumericInput() {
         if(!std::cin) {
-            std::cin.clear(); // reset failbit
+            std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return false;
         }
         return true;
     }
-    
+
+    void drawBlueLine() {
+        std::cout<<"  ";
+        std::cout<<"\033[1;34m";
+        for (int i = 0; i <= width*2; i++) std::cout<<"-";
+        std::cout<<std::endl;
+        std::cout<<"\033[0m";
+    }
+
+    std::string charRepresentationOf(int neighbours) {
+        switch (neighbours) {
+            case 0: return "\u0002"; //
+            case 1: return "\033[34m1\033[1;0m"; //blue 1
+            case 2: return "\033[32m2\033[1;0m"; //green2
+            case 3: return "\033[31m3\033[1;0m"; //red3
+            case 4: return "\033[33m4\033[1;0m"; //yellow4
+            case 5: return "\033[36m5\033[1;0m"; //cyan5
+            case 6: return "\033[35m6\033[1;0m"; //magenta6
+            case 7: return "7"; //black7
+            case 8: return "\033[1m\033[30m8\033[1;0m"; //bold black8
+        }
+    }
 };
 
 

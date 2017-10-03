@@ -5,14 +5,16 @@
 #ifndef AREASWEEPER_AREA_H
 #define AREASWEEPER_AREA_H
 
+#include <iostream>
 
 namespace charRepresentations {
     static const char free = '-';
     static const char mined = '+';
-    static const char flagged = 'f';
+    static const char flagged = '!';
     static const char boom = '@';
-    static const char unrevealed = 'u';
+    static const std::string unrevealed = "\033[1;7m\u0002\033[1;0m";
 }
+
 
 
 class Area {

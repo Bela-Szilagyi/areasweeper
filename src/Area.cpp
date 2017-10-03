@@ -2,7 +2,6 @@
 // Created by en on 2017.10.02..
 //
 
-#include <regex.h>
 #include "Area.h"
 
 
