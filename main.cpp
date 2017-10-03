@@ -20,11 +20,11 @@ public:
         char option;
         do {
             do {
-                std::cout << "Enter x (between 0 and "<<width<<") ";
+                std::cout << "Enter x (between 0 and "<<width-1<<") ";
                 std::cin >> x;
             } while (!isNumericInput() || x < 0 || x >= width);
             do {
-                std::cout << "Enter y (between 0 and "<<height<<") ";
+                std::cout << "Enter y (between 0 and "<<height-1<<") ";
                 std::cin >> y;
             } while (!isNumericInput() || y < 0 || y >= height);
 
@@ -56,10 +56,10 @@ public:
             }
             if (option == 'f') {
                 if (place->isRevealed()) {
-                    std::cout << "Already revealed'" << std::endl;
+                    std::cout << "Already revealed!" << std::endl;
                     continue;
                 } else if (place->isFlagged()) {
-                    std::cout << "Already flagged'" << std::endl;
+                    std::cout << "Already flagged!" << std::endl;
                     continue;
                 } else {
                     place->setFlag();
@@ -78,10 +78,10 @@ public:
             }
             if (option=='u') {
                 if (place->isRevealed()) {
-                    std::cout << "Already revealed'" << std::endl;
+                    std::cout << "Already revealed!" << std::endl;
                     continue;
                 } else if (!place->isFlagged()) {
-                    std::cout << "Not flagged'" << std::endl;
+                    std::cout << "Not flagged!" << std::endl;
                     continue;
                 } else {
                     place->removeFlag();
@@ -120,9 +120,9 @@ private:
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 if ((area+h*width+w)->isMined()) {
-                    std::cout << '+';
+                    std::cout << charRepresentations::mined;
                 } else {
-                    std::cout << '-';
+                    std::cout << charRepresentations::free;
                 }
             }
             std::cout<<std::endl;
@@ -233,9 +233,9 @@ private:
         std::cout<<"Number of mines: "<<nrOfMines<<", number of flags: "<<nrOfFlags<<std::endl;
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
-                if ( (area+h*width+w)->isFlagged() ) std::cout<<'f';
+                if ( (area+h*width+w)->isFlagged() ) std::cout<<charRepresentations::flagged;
                 else if ( (area+h*width+w)->isRevealed() ) std::cout<<(area+h*width+w)->getNeighbours();
-                else std::cout<<'u';
+                else std::cout<<charRepresentations::unrevealed;
             }
             std::cout<<std::endl;
         }
@@ -245,8 +245,8 @@ private:
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 if ( (area+h*width+w)->isRevealed() ) std::cout<<(area+h*width+w)->getNeighbours();
-                else if ( (area+h*width+w)->isMined() ) std::cout<<'@';
-                else std::cout<<'u';
+                else if ( (area+h*width+w)->isMined() ) std::cout<<charRepresentations::boom;
+                else std::cout<<charRepresentations::unrevealed;
             }
             std::cout<<std::endl;
         }

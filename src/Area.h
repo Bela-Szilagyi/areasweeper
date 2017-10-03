@@ -6,6 +6,15 @@
 #define AREASWEEPER_AREA_H
 
 
+namespace charRepresentations {
+    static const char free = '-';
+    static const char mined = '+';
+    static const char flagged = 'f';
+    static const char boom = '@';
+    static const char unrevealed = 'u';
+}
+
+
 class Area {
 public:
     Area();
