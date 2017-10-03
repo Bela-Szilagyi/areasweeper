@@ -20,11 +20,11 @@ public:
         char option;
         do {
             do {
-                std::cout << "Enter x ";
+                std::cout << "Enter x (between 0 and "<<width<<") ";
                 std::cin >> x;
             } while (!isNumericInput() || x < 0 || x >= width);
             do {
-                std::cout << "Enter y ";
+                std::cout << "Enter y (between 0 and "<<height<<") ";
                 std::cin >> y;
             } while (!isNumericInput() || y < 0 || y >= height);
 
@@ -44,8 +44,14 @@ public:
                     return;
                 } else {
                     reveal(x, y);
-                    printReveal();
-                    continue;
+                    if (foundMines == nrOfMines && isAllRevealed()) {
+                        std::cout<<":-)"<<std::endl;
+                        printEnd();
+                        return;
+                    } else {
+                        printReveal();
+                        continue;
+                    }
                 }
             }
             if (option == 'f') {
