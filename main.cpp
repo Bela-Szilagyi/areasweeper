@@ -152,7 +152,7 @@ private:
     int nrOfFlags = 0;
 
     void initArea() {
-        //TODO make sure taht at least one mine is set
+        //TODO set nr of mines according to level
         int random;
         std::srand(std::time(NULL));
         for(int i = 0; i < width*height; i++) {
@@ -252,7 +252,7 @@ private:
         if ( w ) reveal(x-1, y);
         if ( n && w ) reveal(x-1, y-1);
     }
-
+    
     void printReveal() {
         std::cout<<"Number of mines: "<<nrOfMines<<", number of flags: "<<nrOfFlags<<std::endl;
         std::cout<<"   "; for (int i = 0; i < width; i++) { std::cout<<i%10;std::cout<<" "; } std::cout<<std::endl;
@@ -265,11 +265,13 @@ private:
                 else std::cout<<charRepresentations::unrevealed;
                 std::cout<<"\033[1;34m|\033[0m";
             }
-            std::cout<<std::endl;
+            std::cout<<" "<<h%10<<std::endl;
         }
         drawBlueLine();
+        std::cout<<"   "; for (int i = 0; i < width; i++) { std::cout<<i%10;std::cout<<" "; } std::cout<<std::endl;
     }
 
+    //TODO pretty print
     void printEnd() {
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
