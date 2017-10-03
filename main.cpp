@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include <limits>
 #include "src/Area.h"
 
 class AreaSweeper {
@@ -17,16 +18,15 @@ public:
         printNeighbours();
         int x, y;
         char option;
-        //TODO check if not x,y not digit
         do {
             do {
                 std::cout << "Enter x ";
                 std::cin >> x;
-            } while (x < 0 || x >= width);
+            } while (!isNumericInput() || x < 0 || x >= width);
             do {
                 std::cout << "Enter y ";
                 std::cin >> y;
-            } while (y < 0 || y >= height);
+            } while (!isNumericInput() || y < 0 || y >= height);
 
             do {
                 std::cout << "Enter option: reveal/flag/unfalg (r/f/u) ";
@@ -253,6 +253,15 @@ private:
         return true;
     }
 
+    bool isNumericInput() {
+        if(!std::cin) {
+            std::cin.clear(); // reset failbit
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return false;
+        }
+        return true;
+    }
+    
 };
 
 
