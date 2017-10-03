@@ -19,12 +19,12 @@ public:
     }
 
     char getLevel() {
-        char level;
+        std::string level;
         do {
             std::cout << "Enter difficulty level beginner/intermediate/expert (b/i/e) ";
             std::cin >> level;
-        } while (level != 'b' && level != 'i' && level != 'e');
-        return level;
+        } while (level[0] != 'b' && level[0] != 'i' && level[0] != 'e');
+        return level[0];
     }
 
     void setLevel(char l) {
@@ -56,7 +56,7 @@ public:
     bool getDebugMode() {
         char answer;
         do {
-            std::cout << "Do you want to see the table and the number of beighbours (debug mode) y/n ";
+            std::cout << "Do you want to see the table and the number of neighbours (debug mode) y/n ";
             std::cin >> answer;
         } while (answer != 'y' && answer != 'n');
         if (answer == 'n') return false;
@@ -65,7 +65,7 @@ public:
 
     void run() {
         int x, y;
-        char option;
+        std::string option;
         do {
             do {
                 std::cout << "Enter x (between 0 and "<<width-1<<") ";
@@ -79,10 +79,10 @@ public:
             do {
                 std::cout << "Enter option: reveal/flag/unfalg (r/f/u) ";
                 std::cin >> option;
-            } while (option != 'r' && option != 'f' && option != 'u');
+            } while (option[0] != 'r' && option[0] != 'f' && option[0] != 'u');
 
             Area *place = area + y * width + x;
-            if (option == 'r') {
+            if (option[0] == 'r') {
                 if ((place->isRevealed())) {
                     std::cout << "Already revealed'" << std::endl;
                     continue;
@@ -102,7 +102,7 @@ public:
                     }
                 }
             }
-            if (option == 'f') {
+            if (option[0] == 'f') {
                 if (place->isRevealed()) {
                     std::cout << "Already revealed!" << std::endl;
                     continue;
@@ -124,7 +124,7 @@ public:
                     continue;
                 }
             }
-            if (option=='u') {
+            if (option[0] =='u') {
                 if (place->isRevealed()) {
                     std::cout << "Already revealed!" << std::endl;
                     continue;
@@ -152,15 +152,13 @@ private:
     int nrOfFlags = 0;
 
     void initArea() {
-        //TODO set nr of mines according to level
         int random;
         std::srand(std::time(NULL));
-        for(int i = 0; i < width*height; i++) {
-            random = std::rand()%5+1;
-            if (random > 4) {
-                ++nrOfMines;
-                (area+i)->setMine();
-            }
+        for (int i = 0; i < nrOfMines; i++) {
+            do {
+                random = std::rand()%(width*height);
+            } while ((area+random)->isMined());
+            (area+random)->setMine();
         }
     }
 
@@ -252,11 +250,11 @@ private:
         if ( w ) reveal(x-1, y);
         if ( n && w ) reveal(x-1, y-1);
     }
-    
+
     void printReveal() {
         std::cout<<"Number of mines: "<<nrOfMines<<", number of flags: "<<nrOfFlags<<std::endl;
         std::cout<<"   "; for (int i = 0; i < width; i++) { std::cout<<i%10;std::cout<<" "; } std::cout<<std::endl;
-        drawBlueLine();
+        std::cout<<"  ";drawBlueLine();
         for (int h = 0; h < height; h++) {
             std::cout<<h%10<<" \033[1;34m|\033[0m";
             for (int w = 0; w < width; w++) {
@@ -267,20 +265,23 @@ private:
             }
             std::cout<<" "<<h%10<<std::endl;
         }
-        drawBlueLine();
+        std::cout<<"  ";drawBlueLine();
         std::cout<<"   "; for (int i = 0; i < width; i++) { std::cout<<i%10;std::cout<<" "; } std::cout<<std::endl;
     }
 
-    //TODO pretty print
     void printEnd() {
+        drawBlueLine();
         for (int h = 0; h < height; h++) {
+            std::cout<<"\033[1;34m|\033[0m";
             for (int w = 0; w < width; w++) {
-                if ( (area+h*width+w)->isRevealed() ) std::cout<<(area+h*width+w)->getNeighbours();
+                if ( (area+h*width+w)->isRevealed() ) std::cout<<charRepresentationOf((area+h*width+w)->getNeighbours());
                 else if ( (area+h*width+w)->isMined() ) std::cout<<charRepresentations::boom;
                 else std::cout<<charRepresentations::unrevealed;
+                std::cout<<"\033[1;34m|\033[0m";
             }
             std::cout<<std::endl;
         }
+        drawBlueLine();
     }
 
     bool isAllRevealed() {
@@ -300,7 +301,6 @@ private:
     }
 
     void drawBlueLine() {
-        std::cout<<"  ";
         std::cout<<"\033[1;34m";
         for (int i = 0; i <= width*2; i++) std::cout<<"-";
         std::cout<<std::endl;
